@@ -1,1 +1,5 @@
 Links= //h2/a/@href
+Titulos= //div[@class="mb-auto"]/h2/span/text()
+Fecha= //span[@class="date"]/text()
+Subtitulo= //div[@class="lead"]/p/text()
+Contenido= //div[@class="html-content"]/p/descendant-or-self::text()
