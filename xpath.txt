@@ -3,3 +3,6 @@ Titulos= //div[@class="mb-auto"]/h2/span/text()
 Fecha= //span[@class="date"]/text()
 Subtitulo= //div[@class="lead"]/p/text()
 Contenido= //div[@class="html-content"]/p/descendant-or-self::text()
+
+#Note to myself
+#Python doesn't recognize h2, instead use 'text-fill'
