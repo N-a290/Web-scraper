@@ -1,13 +1,50 @@
 import requests
 import lxml.html as html
+import os
+import datetime
 
 HOME= 'https://www.larepublica.co'
 
 XPATH_LINK_TO_ARTICLE = '//text-fill[not(@class)]/a/@href'
-XPATH_TITLE= '//div[@class="html-content"]/p/descendant-or-self::text()'
+XPATH_TITLE= '//div[@class="mb-auto"]/text-fill/span/text()'
 XPATH_DATE= '//span[@class="date"]/text()'
 XPATH_LEAD= '//div[@class="lead"]/p/text()'
 XPATH_BODY= '//div[@class="html-content"]/p/descendant-or-self::text()'
+
+def parse_notice(link,today):
+    try:
+        response= requests.get(link)
+        if response.status_code == 200:
+            notice= response.content.decode('utf-8')
+            parsed= html.fromstring(notice)
+            try:
+                title= parsed.xpath(XPATH_TITLE)
+                #title= title.replace('\"','')
+                date= parsed.xpath(XPATH_DATE)
+                summary= parsed.xpath(XPATH_LEAD)
+                body= parsed.xpath(XPATH_BODY)
+                #no guarda ningun titulo en title pero si coge los date
+                print(title)
+                print(date)
+
+            except IndexError:
+                return
+
+            '''with open(f'07-08-2022/{title}.txt', 'w', encoding='utf-8') as f:
+                f.write(title)
+                f.write('\n\n')
+                f.write(date)
+                f.write('\n')
+                f.write(summary)
+                f.write('\n\n')
+                for p in body:
+                    f.write(p)
+                    f.write('\n')'''
+        else:
+            raise ValueError(f'Error: {response.status_code}. Sucedó un error llamando un link')
+    except ValueError as ve:
+        print(ve)
+
 
 def parse_home():
     try:
@@ -16,9 +53,16 @@ def parse_home():
             home= response.content.decode('utf-8')
             parsed= html.fromstring(home)
             links_article= parsed.xpath(XPATH_LINK_TO_ARTICLE)
-            print(links_article)
+            #print(links_article)
+            
+            today= datetime.date.today().strftime('%d-%m-%Y')
+            if not os.path.isdir(today):
+                os.mkdir(today)
+                
+            for link in links_article:
+                parse_notice(link,today)
         else:
-            raise ValueError(f"Error: {response.status_code}")
+            raise ValueError(f"Error: {response.status_code}. No se pudo llamar los links de la página")
     except ValueError as ve:
         print(ve)
 
