@@ -1,8 +1,9 @@
-Links= //h2/a/@href
-Titulos= //div[@class="mb-auto"]/h2/span/text()
-Fecha= //span[@class="date"]/text()
-Subtitulo= //div[@class="lead"]/p/text()
-Contenido= //div[@class="html-content"]/p/descendant-or-self::text()
+Links= //h2/a/@href "//div[@class="mb-auto"]/descendant-or-self::text()"
+Title= //div[@class="mb-auto"]/h2/span/text() "//div[@class="mb-auto"]/descendant-or-self::text()"
+Date= //span[@class="date"]/text()
+Lead= //div[@class="lead"]/p/text()
+Body= //div[@class="html-content"]/p/descendant-or-self::text()
 
 #Note to myself
 #Python doesn't recognize h2, instead use 'text-fill'
+#If the script doesn't get any text, use a expression more general like descendants
