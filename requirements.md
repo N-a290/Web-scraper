@@ -1,0 +1,9 @@
+autopep8==1.6.0
+certifi==2022.6.15
+charset-normalizer==2.1.0
+idna==3.3
+lxml==4.9.1
+pycodestyle==2.9.1
+requests==2.28.1
+toml==0.10.2
+urllib3==1.26.11
