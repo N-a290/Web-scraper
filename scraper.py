@@ -28,7 +28,9 @@ def parse_notice(link,today):
             except IndexError:
                 return
 
-            with open(f'07-08-2022/{title}.txt', 'w', encoding='utf-8') as f:
+            title = title.replace("?", "")
+
+            with open(f"Noticias/{today}/{title}.txt", "w", encoding="utf-8") as f:
                 f.write(title)
                 f.write('\n\n')
                 f.write(date)
@@ -54,8 +56,8 @@ def parse_home():
             #print(links_article)
             
             today= datetime.date.today().strftime('%d-%m-%Y')
-            if not os.path.isdir(today):
-                os.mkdir(today)
+            if not os.path.isdir(f"Noticias/{today}"):
+                os.mkdir(f"Noticias/{today}")
                 
             for link in links_article:
                 parse_notice(link,today)
